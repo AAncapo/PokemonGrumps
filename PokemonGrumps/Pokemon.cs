@@ -17,20 +17,29 @@ namespace PokemonGrumps
         int HitPts;
         int atk, def, sp_atk, sp_def;
         double actualExp;
-        double neededExp;
+        double needExp;
 
         string[,] pokedex =
         {
             {"Sch","FIRE",""},
-            {"Knurttt","POISON","Bundt."},
+            {"Knurttt","NORMAL",""},
             {"SPLAART!!!","ELECTRIC",""},
-            {"Fuck King","GRASS",""},
+            {"Fuck King","GRASS","POISON"},
             {"Buntd,","BUG","POISON"},
             {"MAGIKRAP","WATER",""},
             {"TurntSNACO","ROCK",""},
         };
 
         Random randNum = new Random();
+
+        public Pokemon(string name, string type1, string type2, int lvl, int hp)
+        {
+            Name = name;
+            Type1 = type1;
+            Type2 = type2;
+            Level = lvl;
+            HitPts = hp;
+        }
 
         public Pokemon()
         {
@@ -39,24 +48,66 @@ namespace PokemonGrumps
             Name = pokedex[randName, 0];
             Type1 = pokedex[randName, 1];
             Type2 = pokedex[randName, 2];
-            Color = ConsoleColor.DarkGray; //placeholder
         }
 
         public void displayInfo()
         {
-            WriteLine($"> {Name} type:{Type1}/{Type2} level:{Level} HP:{HitPts}" +
+            Write($"> {Name} type:");BackgroundColor = assignColor(Type1); Write($"{Type1}");ResetColor();Write($"/");BackgroundColor = assignColor(Type2);
+            Write($"{Type2}");ResetColor();WriteLine($"level:{Level} HP:{HitPts}" +
                     $"\n  atk:{atk} def:{def} sp.attack:{sp_atk} sp.defense:{sp_def}" +
-                    $"\n  EXP < ########## >{actualExp}/{neededExp}");
+                    $"\n  EXP < ########## >{actualExp}/{needExp}");
         }
 
-        public void setInitialPKMN(string name, string type1, string type2, ConsoleColor color, int lvl, int hp)
+        ConsoleColor assignColor(string type)
         {
-
-        }
-
-        void assignColorToType()
-        {
-
+            switch (type)
+            {
+                case "GRASS":
+                    Color = ConsoleColor.Green;
+                    break;
+                case "WATER":
+                    Color = ConsoleColor.Blue;
+                    break;
+                case "FIRE":
+                    Color = ConsoleColor.Red;
+                    break;
+                case "NORMAL":
+                    Color = ConsoleColor.DarkGray;
+                    break;
+                case "ELECTRIC":
+                    Color = ConsoleColor.Yellow;
+                    break;
+                case "POISON":
+                    Color = ConsoleColor.DarkMagenta;
+                    break;
+                case "FLYING":
+                    Color = ConsoleColor.Gray;
+                    break;
+                case "ICE":
+                    Color = ConsoleColor.Cyan;
+                    break;
+                case "BUG":
+                    Color = ConsoleColor.DarkYellow;
+                    break;
+                case "ROCK":
+                    Color = ConsoleColor.DarkGray;
+                    break;
+                case "GROUND":
+                    Color = ConsoleColor.DarkGreen;
+                    break;
+                case "FIGHTING":
+                    Color = ConsoleColor.DarkRed;
+                    break;
+                case "PSYCHIC":
+                    Color = ConsoleColor.Magenta;
+                    break;
+                case "GHOST":
+                    Color = ConsoleColor.DarkMagenta;
+                    break;
+                default:
+                    break;
+            }
+            return Color;
         }
 
         public void useMove()
@@ -66,13 +117,6 @@ namespace PokemonGrumps
 
         //public void aWildPokemonAppear()
         //{
-        //    int totalNames = pokedex.GetLength(0);//rows
-        //    Random randNum = new Random();
-        //    int randName = randNum.Next(0, totalNames);
-        //    string wildName = pokedex[randName, 0];
-        //    string wildType1 = pokedex[randName, 1];
-        //    string wildType2 = pokedex[randName, 2];
-        //    Pokemon wild = new Pokemon(wildName, wildType1, wildType2, ConsoleColor.Cyan, 5, 15);
         //    wild.displayInfo();
         //    WriteLine("> A wild '{0}' appear!", wild.Name);
         //}
