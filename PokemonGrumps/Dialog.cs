@@ -36,13 +36,12 @@ namespace PokemonGrumps
             ReadKey(true);
             Write("Oak: Let's begin with your name.\nWhat is it? ");
             ReadLine();
-            Write("Oak: Right. Your name is 'I never'! .\n");
+            Write("Oak: Right. ");
             ForegroundColor = ConsoleColor.DarkYellow;
-            WriteLine("(this will be relevant later in the game)\n");
+            WriteLine("Your name is 'I never'!\n");
             ResetColor();
             ReadKey(true);
             WriteLine("Oak: Your very own POKéMON legend is about to unfold!");
-            Write("AAAAAAAAAAAAAAAAAAAAA");
             ReadKey(true);
             WriteLine();
             Clear();
