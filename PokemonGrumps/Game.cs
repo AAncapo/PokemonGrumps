@@ -16,7 +16,8 @@ namespace PokemonGrumps
         public void Intro()
         {
             Title = "Pokemon GRUMPS";
-            text.IntroductionDialog();
+            text.fancyTitle();
+            //text.IntroductionDialog();
 
             //elige tu pokemon inicial
             InitialPkmn();
@@ -38,10 +39,10 @@ namespace PokemonGrumps
                 selection = ReadLine();
                 if (selection == "y")
                 {
-                    initialPKMN = new Pokemon();
-                    initialPKMN.setInitialPKMN("Baelba", "GRASS", "", ConsoleColor.Green, 5, 15);
+                    initialPKMN = new Pokemon("Baelba", "GRASS", "", 5, 15);
                     Inever.AddPKMN(initialPKMN);
                     WriteLine("\n> I never received the BULBASAUR from PROF. Oak!");
+                    Inever.ActionPrompt();
                 }
                 else InitialPkmn();
             }
@@ -53,10 +54,10 @@ namespace PokemonGrumps
                 if (selection == "y")
                 {
                     //add squirtle to team.
-                    initialPKMN = new Pokemon();
-                    initialPKMN.setInitialPKMN("Sqertol", "WATER", "", ConsoleColor.Blue, 5, 15);
+                    initialPKMN = new Pokemon("Sqertol", "WATER", "", 5, 15);
                     Inever.AddPKMN(initialPKMN);
                     WriteLine("\n> I never received the SQUIRTLE from PROF. Oak!");
+                    Inever.ActionPrompt();
                 }
                 else InitialPkmn();
             }
@@ -68,10 +69,10 @@ namespace PokemonGrumps
                 if (selection == "y")
                 {
                     //add charmander to team.
-                    initialPKMN = new Pokemon();
-                    initialPKMN.setInitialPKMN("Sch", "FIRE", "", ConsoleColor.Red, 5, 15);
+                    initialPKMN = new Pokemon("Sch", "FIRE", "", 5, 15);
                     Inever.AddPKMN(initialPKMN);
                     WriteLine("\n> I never received the CHARMANDER from PROF. Oak!");
+                    Inever.ActionPrompt();
                 }
                 else InitialPkmn();
             }
