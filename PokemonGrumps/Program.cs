@@ -11,7 +11,6 @@ namespace PokemonGrumps
         static void Main(string[] args)
         {
             Game newGame = new Game();
-            newGame.Intro();
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
