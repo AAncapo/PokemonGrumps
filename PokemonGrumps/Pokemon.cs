@@ -9,16 +9,15 @@ namespace PokemonGrumps
 {
     class Pokemon
     {
-        string Name;
-        string Type1;
+        public string Name { get; set; }
+        public string Type1 { get; set; }
         string Type2;
-        ConsoleColor Color;
         int Level;
-        int HitPts;
-        int atk, def, sp_atk, sp_def;
-        double actualExp;
-        double needExp;
-
+        int totalHp;
+        public int currentHp;
+        public int atk, def, speed, expPts, expLvUp;
+        public bool isActive;
+        Random randNum = new Random();
         string[,] pokedex =
         {
             {"Sch","FIRE",""},
@@ -29,18 +28,16 @@ namespace PokemonGrumps
             {"MAGIKRAP","WATER",""},
             {"TurntSNACO","ROCK",""},
         };
-
-        Random randNum = new Random();
-
-        public Pokemon(string name, string type1, string type2, int lvl, int hp)
+        //initial pkmn
+        public Pokemon(string name, string type1, string type2, int lvl)
         {
             Name = name;
             Type1 = type1;
             Type2 = type2;
             Level = lvl;
-            HitPts = hp;
+            setStats();
         }
-
+        //wild pokemn
         public Pokemon()
         {
             int totalNames = pokedex.GetLength(0);
@@ -48,18 +45,45 @@ namespace PokemonGrumps
             Name = pokedex[randName, 0];
             Type1 = pokedex[randName, 1];
             Type2 = pokedex[randName, 2];
+            Level = randNum.Next(2, 6);
+            setStats();
+        }
+
+        void setStats()
+        {
+            ////placeholder////
+            totalHp = Level + 15;
+            currentHp = totalHp;
+            atk = Level + 6;
+            def = Level + 5;
+            speed = Level + 6;
+            expPts = Level * 20;
+            expLvUp = expPts + 20;
+        }
+                   
+        public void levelUp()
+        {
+            Level++;
         }
 
         public void displayInfo()
         {
-            Write($"> {Name} type:");BackgroundColor = assignColor(Type1); Write($"{Type1}");ResetColor();Write($"/");BackgroundColor = assignColor(Type2);
-            Write($"{Type2}");ResetColor();WriteLine($"level:{Level} HP:{HitPts}" +
-                    $"\n  atk:{atk} def:{def} sp.attack:{sp_atk} sp.defense:{sp_def}" +
-                    $"\n  EXP < ########## >{actualExp}/{needExp}");
+            Write($"> {Name} type:");
+            BackgroundColor = assignColor(Type1); 
+            Write($"{Type1}");
+            ResetColor();
+            Write($"/");
+            BackgroundColor = assignColor(Type2);
+            Write($"{Type2}");
+            ResetColor();
+            WriteLine($"level:{Level} HP:{totalHp}" +
+            $"\n  atk:{atk} def:{def}" +
+            $"\n  EXP < ########## >{expPts}/{expLvUp}");
         }
 
-        ConsoleColor assignColor(string type)
+        public ConsoleColor assignColor(string type)
         {
+            ConsoleColor Color = ConsoleColor.Gray;
             switch (type)
             {
                 case "GRASS":
@@ -110,15 +134,9 @@ namespace PokemonGrumps
             return Color;
         }
 
-        public void useMove()
-        {
-            WriteLine("> {0} used scratch!", Name);
-        }
-
-        //public void aWildPokemonAppear()
+        //public void useMove()
         //{
-        //    wild.displayInfo();
-        //    WriteLine("> A wild '{0}' appear!", wild.Name);
+        //    WriteLine("> {0} used scratch!", Name);
         //}
     }
 }
