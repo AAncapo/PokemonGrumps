@@ -108,8 +108,7 @@ namespace PokemonGrumps
                 WriteLine(encounterChance); //simulando caminar en hierba alta
             }
             Pokemon wild = new Pokemon();
-            ConsoleColor bg = wild.assignColor(wild.Type1);
-            Write("> A wild "); BackgroundColor = bg; Write($"{wild.Name}"); ResetColor(); WriteLine(" appear!");
+            Write($"> A wild {wild.Name} appear!");
             Inever.ActionPrompt(wild);
         }
     }

@@ -34,7 +34,7 @@ namespace PokemonGrumps
             Type1 = type1;
             Type2 = type2;
             Level = lvl;
-            setStats();
+            setRandomStats();
         }
         //wild pokemn
         public Pokemon()
@@ -45,10 +45,10 @@ namespace PokemonGrumps
             Type1 = pokedex[randName, 1];
             Type2 = pokedex[randName, 2];
             Level = randNum.Next(2, 6);
-            setStats();
+            setRandomStats();
         }
 
-        void setStats()
+        void setRandomStats()
         {
             ////placeholder////
             totalHp = Level + 15;
@@ -59,6 +59,7 @@ namespace PokemonGrumps
             expPts = Level * 20;
             expLvUp = expPts + 20;
         }
+
         //public void levelUp()
         //{
         //    Level++;
@@ -67,69 +68,72 @@ namespace PokemonGrumps
         public void displayInfo()
         {
             Write($"> {Name} type:");
-            BackgroundColor = assignColor(Type1); 
-            Write($"{Type1}");
-            ResetColor();
+            typeColor(Type1);
             Write($"/");
-            BackgroundColor = assignColor(Type2);
-            Write($"{Type2}");
-            ResetColor();
-            WriteLine($"level:{Level} HP:{totalHp}" +
+            typeColor(Type2);
+            WriteLine($" level:{Level} HP:{totalHp}" +
             $"\n  atk:{atk} def:{def}" +
             $"\n  EXP < ########## >{expPts}/{expLvUp}");
         }
 
-        public ConsoleColor assignColor(string type)
+        //ConsoleColor[] typeColors =
+        //    {
+        //    ConsoleColor.Green, ConsoleColor.Blue, ConsoleColor.Blue, ConsoleColor.Red, ConsoleColor.DarkGray,ConsoleColor.Yellow, ConsoleColor.DarkMagenta,ConsoleColor.Gray
+        //    };
+
+        public void typeColor(string type)
         {
-            ConsoleColor Color = ConsoleColor.Gray;
+            ConsoleColor typeColor = ConsoleColor.Gray;
             switch (type)
             {
                 case "GRASS":
-                    Color = ConsoleColor.Green;
+                    typeColor = ConsoleColor.Green;
                     break;
                 case "WATER":
-                    Color = ConsoleColor.Blue;
+                    typeColor = ConsoleColor.Blue;
                     break;
                 case "FIRE":
-                    Color = ConsoleColor.Red;
+                    typeColor = ConsoleColor.Red;
                     break;
                 case "NORMAL":
-                    Color = ConsoleColor.DarkGray;
+                    typeColor = ConsoleColor.DarkGray;
                     break;
                 case "ELECTRIC":
-                    Color = ConsoleColor.Yellow;
+                    typeColor = ConsoleColor.Yellow;
                     break;
                 case "POISON":
-                    Color = ConsoleColor.DarkMagenta;
+                    typeColor = ConsoleColor.DarkMagenta;
                     break;
                 case "FLYING":
-                    Color = ConsoleColor.Gray;
+                    typeColor = ConsoleColor.Gray;
                     break;
                 case "ICE":
-                    Color = ConsoleColor.Cyan;
+                    typeColor = ConsoleColor.Cyan;
                     break;
                 case "BUG":
-                    Color = ConsoleColor.DarkYellow;
+                    typeColor = ConsoleColor.DarkYellow;
                     break;
                 case "ROCK":
-                    Color = ConsoleColor.DarkGray;
+                    typeColor = ConsoleColor.DarkGray;
                     break;
                 case "GROUND":
-                    Color = ConsoleColor.DarkGreen;
+                    typeColor = ConsoleColor.DarkGreen;
                     break;
                 case "FIGHTING":
-                    Color = ConsoleColor.DarkRed;
+                    typeColor = ConsoleColor.DarkRed;
                     break;
                 case "PSYCHIC":
-                    Color = ConsoleColor.Magenta;
+                    typeColor = ConsoleColor.Magenta;
                     break;
                 case "GHOST":
-                    Color = ConsoleColor.DarkMagenta;
+                    typeColor = ConsoleColor.DarkMagenta;
                     break;
                 default:
                     break;
             }
-            return Color;
+            BackgroundColor = typeColor;
+            Write(type);
+            ResetColor();
         }
 
         //public void useMove()
