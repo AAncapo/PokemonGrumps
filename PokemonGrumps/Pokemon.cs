@@ -16,7 +16,6 @@ namespace PokemonGrumps
         int totalHp;
         public int currentHp;
         public int atk, def, speed, expPts, expLvUp;
-        public bool isActive;
         Random randNum = new Random();
         string[,] pokedex =
         {
@@ -61,10 +60,10 @@ namespace PokemonGrumps
             expLvUp = expPts + 20;
         }
                    
-        public void levelUp()
-        {
-            Level++;
-        }
+        //public void levelUp()
+        //{
+        //    Level++;
+        //}
 
         public void displayInfo()
         {

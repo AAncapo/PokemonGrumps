@@ -9,7 +9,7 @@ namespace PokemonGrumps
 {
     class Dialog
     {
-        public void fancyTitle()
+        public void TitleArt()
         {
             Console.WriteLine(@" _____ _____ _____     _____ _____ _____ 
 |  _  |     |  |  |___|     |     |   | |

@@ -10,56 +10,42 @@ namespace PokemonGrumps
     class Player
     {
         List<Pokemon> PKMNteam = new List<Pokemon>();
+        public string Name;
+        int money;
         //int gymBadges = 0;
+        public Player(string name = "I never")
+        {
+            Name = name;
+        }
 
         public void AddPKMN(Pokemon PKMN)
         {
             PKMNteam.Add(PKMN);
         }
 
-        void setActive(int i)
-        {
-            if (!PKMNteam[i].isActive)
-            {
-                PKMNteam[i].isActive=true;
-            }
-        }
-
-        public void ActionPrompt(Pokemon rival)
+        public void ActionPrompt(Pokemon rivalPKMN)
         {
             Pokemon activePKMN = PKMNteam[0];
-            while (rival.currentHp>0)
+            string sel="";
+            while (rivalPKMN.currentHp > 0 && sel != "r")
             {
                 WriteLine($"\n> What will I never do?");
                 WriteLine("====================\n" +
                           "= f-FIGHT    b-BAG =\n" +
                           "= p-PKMN     r-RUN =\n" +
                           "====================");
-                string sel = ReadLine();
+                sel = ReadLine();
                 switch (sel)
                 {
                     case "f":
-                        Fight(activePKMN, rival);
+                        Fight(activePKMN, rivalPKMN);
                         break;
                     case "b":
                         //bag
                         break;
                     case "p":
-                        WriteLine("\n============ POKéMONs ============");
-                        for (int i = 0; i < PKMNteam.Count; i++)
-                        {
-                            PKMNteam[i].displayInfo();
-                        }
-                        WriteLine("==================================");
-                        if (PKMNteam.Count > 1)
-                        {
-                            Write("> Select one pokemon to swap ");
-                            int selected = int.Parse(ReadLine());
-
-                            PKMNteam[selected].isActive = true;
-                            //take pokemon from list
-                            ActionPrompt(rival);
-                        }
+                        displayPKMNteam(activePKMN);
+                        ActionPrompt(rivalPKMN);
                         break;
                     case "r":
                         WriteLine("> eeeeeeeeee BYE!");
@@ -68,20 +54,20 @@ namespace PokemonGrumps
                         break;
                 }
             }
-            WriteLine("> the wild '{0}' has been defeated! {1} got tolevel up!", rival.Name, activePKMN.Name);
+            WriteLine("> Foe '{0}' fainted!", rivalPKMN.Name);
         }
-
+        //FIGHT----------------------------------------------------------------------FIGHT//
         public void Fight(Pokemon activePKMN, Pokemon rival)
         {
             WriteLine("> Select a move\n 0 SCRATCH  1 GROWL  2 BACK");
             int sel = int.Parse(ReadLine());
             if (sel == 0)
             {
-                Write("enemy previous hp-{0} ", rival.currentHp);
+                Write("enemy previous hp {0} ", rival.currentHp);
                 WriteLine($"{activePKMN.Name} used scratch!");
                 rival.currentHp -= (activePKMN.atk + 5) - rival.def;
                 WriteLine($"'{rival.Name}' loses {(activePKMN.atk + 5) - rival.def} HP");
-                WriteLine("enemy actual hp-{0} ", rival.currentHp);
+                WriteLine("enemy actual hp {0} ", rival.currentHp);
             }
             else if (sel == 1)
             {
@@ -90,6 +76,23 @@ namespace PokemonGrumps
                 WriteLine($"'{rival.Name}' attack power lowers!");
             }
             else ActionPrompt(rival);
+        }
+        //PKMN----------------------------------------------------------------------PKMN//
+        void displayPKMNteam(Pokemon activePKMN)
+        {
+            WriteLine("\n============ POKéMONs ============");
+            for (int i = 0; i < PKMNteam.Count; i++)
+            {
+                PKMNteam[i].displayInfo();
+            }
+            WriteLine("==================================");
+            if (PKMNteam.Count > 1)
+            {
+                Write("> Select one pokemon to swap ");
+                int selected = int.Parse(ReadLine());
+                //take pokemon from list
+                activePKMN = PKMNteam[selected];
+            }
         }
     }
 }
