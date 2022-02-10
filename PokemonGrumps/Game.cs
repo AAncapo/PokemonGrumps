@@ -10,21 +10,25 @@ namespace PokemonGrumps
     class Game
     {
         Dialog text = new Dialog();
+        Pokemon playerPKMN;
         Player Inever = new Player();
-        Pokemon initialPKMN;
 
-        public void Intro()
+        public Game()
+        {
+            Intro();
+            intoBattleArea();
+        }
+
+        void Intro()
         {
             Title = "Pokemon GRUMPS";
             text.fancyTitle();
-            //text.IntroductionDialog();
-
-            //elige tu pokemon inicial
+            text.IntroductionDialog();
             InitialPkmn();
             //pelea contra trainer Claarff
         }
 
-        public void InitialPkmn()
+        void InitialPkmn()
         {
             WriteLine("Oak: You need your own POKéMON for your protection.\n" +
                 "There are three POKéMON here. You can have one.\nGo on, choose!");
@@ -39,10 +43,9 @@ namespace PokemonGrumps
                 selection = ReadLine();
                 if (selection == "y")
                 {
-                    initialPKMN = new Pokemon("Baelba", "GRASS", "", 5, 15);
-                    Inever.AddPKMN(initialPKMN);
+                    playerPKMN = new Pokemon("Baelba", "GRASS", "", 5);
+                    Inever.AddPKMN(playerPKMN);
                     WriteLine("\n> I never received the BULBASAUR from PROF. Oak!");
-                    Inever.ActionPrompt();
                 }
                 else InitialPkmn();
             }
@@ -54,10 +57,9 @@ namespace PokemonGrumps
                 if (selection == "y")
                 {
                     //add squirtle to team.
-                    initialPKMN = new Pokemon("Sqertol", "WATER", "", 5, 15);
-                    Inever.AddPKMN(initialPKMN);
+                    playerPKMN = new Pokemon("Sqertol", "WATER", "", 5);
+                    Inever.AddPKMN(playerPKMN);
                     WriteLine("\n> I never received the SQUIRTLE from PROF. Oak!");
-                    Inever.ActionPrompt();
                 }
                 else InitialPkmn();
             }
@@ -69,14 +71,29 @@ namespace PokemonGrumps
                 if (selection == "y")
                 {
                     //add charmander to team.
-                    initialPKMN = new Pokemon("Sch", "FIRE", "", 5, 15);
-                    Inever.AddPKMN(initialPKMN);
+                    playerPKMN = new Pokemon("Sch", "FIRE", "", 5);
+                    Inever.AddPKMN(playerPKMN);
                     WriteLine("\n> I never received the CHARMANDER from PROF. Oak!");
-                    Inever.ActionPrompt();
                 }
                 else InitialPkmn();
             }
             else InitialPkmn();
+        }
+
+        void intoBattleArea()
+        {
+            Random randNum;
+            int encounterChance = 0;
+            while (encounterChance < 50)
+            {
+                randNum = new Random();
+                encounterChance = randNum.Next(1, 101);
+                WriteLine(encounterChance); //simulando camina en hierba alta
+            }
+            Pokemon wild = new Pokemon();
+            ConsoleColor bg = wild.assignColor(wild.Type1);
+            Write("> A wild "); BackgroundColor = bg; Write($"{wild.Name}"); ResetColor(); WriteLine(" appear!");
+            Inever.ActionPrompt(wild);
         }
     }
 }
