@@ -25,5 +25,7 @@ namespace PokemonGrumps
         {
             rivalPKMNteam.Add(PKMN);
         }
+
+
     }
 }

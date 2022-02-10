@@ -59,7 +59,6 @@ namespace PokemonGrumps
             expPts = Level * 20;
             expLvUp = expPts + 20;
         }
-                   
         //public void levelUp()
         //{
         //    Level++;

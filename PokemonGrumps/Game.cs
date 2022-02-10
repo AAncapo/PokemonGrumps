@@ -27,8 +27,7 @@ namespace PokemonGrumps
             //text.TitleArt();
             //text.IntroductionDialog();
             InitialPkmn();
-            //pelea contra rival Claarff
-            trainerWantsToFight();
+            trainerWantsToFight(); //Claarff
         }
 
         void InitialPkmn()
@@ -92,9 +91,9 @@ namespace PokemonGrumps
 
         void trainerWantsToFight()
         {
-            //rival = new Rival();
+            //@TODO. hacerlo funcionar para diferentes rivales
             WriteLine("> trainer {0} wants to battle!", rival.Name);
-            WriteLine("> {0} use {1}", rival.Name, rival.rivalPKMNteam[0]);
+            WriteLine("> {0} use {1}", rival.Name, rival.rivalPKMNteam[0].Name);
             Inever.ActionPrompt(rival.rivalPKMNteam[0]);
         }
 
@@ -106,7 +105,7 @@ namespace PokemonGrumps
             {
                 randNum = new Random();
                 encounterChance = randNum.Next(1, 101);
-                WriteLine(encounterChance); //simulando camina en hierba alta
+                WriteLine(encounterChance); //simulando caminar en hierba alta
             }
             Pokemon wild = new Pokemon();
             ConsoleColor bg = wild.assignColor(wild.Type1);

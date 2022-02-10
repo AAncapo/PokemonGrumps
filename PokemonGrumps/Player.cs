@@ -39,6 +39,8 @@ namespace PokemonGrumps
                 {
                     case "f":
                         Fight(activePKMN, rivalPKMN);
+                        if (rivalPKMN.currentHp <= 0) 
+                            WriteLine("> Foe '{0}' fainted!", rivalPKMN.Name);
                         break;
                     case "b":
                         //bag
@@ -54,11 +56,12 @@ namespace PokemonGrumps
                         break;
                 }
             }
-            WriteLine("> Foe '{0}' fainted!", rivalPKMN.Name);
+            ReadKey(true);
         }
         //FIGHT----------------------------------------------------------------------FIGHT//
         public void Fight(Pokemon activePKMN, Pokemon rival)
         {
+            //iniciar cada vez q termina un turno enemigo
             WriteLine("> Select a move\n 0 SCRATCH  1 GROWL  2 BACK");
             int sel = int.Parse(ReadLine());
             if (sel == 0)
@@ -68,12 +71,14 @@ namespace PokemonGrumps
                 rival.currentHp -= (activePKMN.atk + 5) - rival.def;
                 WriteLine($"'{rival.Name}' loses {(activePKMN.atk + 5) - rival.def} HP");
                 WriteLine("enemy actual hp {0} ", rival.currentHp);
+                //turno enemigo
             }
             else if (sel == 1)
             {
                 WriteLine($"{activePKMN.Name} used growl!");
                 rival.atk -= 5;
                 WriteLine($"'{rival.Name}' attack power lowers!");
+                //turno enemigo
             }
             else ActionPrompt(rival);
         }
