@@ -1,39 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static System.Console;
 
 namespace PokemonGrumps
 {
     class Pokemon
     {
-        public string Name { get; set; }
-        public string Type1 { get; set; }
-        string Type2;
-        int Level;
-        int totalHp;
-        public int currentHp;
-        public int atk, def, speed, expPts, expLvUp;
+        public string NAME { get; set; }
+        string TypeA;
+        string TypeB;
+        int LVL;
+        int maxHP;
+        int currentHp;
+        int ATK, DEF, SPEED, EXP, EXPnext;
+        string[] moves = new string[4]; //7 lines max each
+        string noMove = "-?????-";
         Random randNum = new Random();
-        string[,] pokedex =
-        {
-            {"Sch","FIRE",""},
-            {"Knurttt","NORMAL",""},
-            {"SPLAART!!!","ELECTRIC",""},
-            {"Fuck King","GRASS","POISON"},
-            {"Buntd,","BUG","POISON"},
-            {"MAGIKRAP","WATER",""},
-            {"TurntSNACO","ROCK",""},
-        };
+        
         //initial pkmn
         public Pokemon(string name, string type1, string type2, int lvl)
         {
-            Name = name;
-            Type1 = type1;
-            Type2 = type2;
-            Level = lvl;
+            NAME = name;
+            TypeA = type1;
+            TypeB = type2;
+            LVL = lvl;
             setRandomStats();
         }
         //wild pokemn
@@ -41,104 +31,134 @@ namespace PokemonGrumps
         {
             int totalNames = pokedex.GetLength(0);
             int randName = randNum.Next(0, totalNames);
-            Name = pokedex[randName, 0];
-            Type1 = pokedex[randName, 1];
-            Type2 = pokedex[randName, 2];
-            Level = randNum.Next(2, 6);
+            NAME = pokedex[randName, 0];
+            TypeA = pokedex[randName, 1];
+            TypeB = pokedex[randName, 2];
+            LVL = randNum.Next(2, 6); //assign lvl by area in game
             setRandomStats();
+        }
+
+        void setNewMoves()
+        {
+            for (int i = 0; i < moves.Length; i++)
+            {
+                if (moves[i] == noMove) moves[i] = "(///-)t";
+                else moves[i] = noMove;
+            }
         }
 
         void setRandomStats()
         {
             ////placeholder////
-            totalHp = Level + 15;
-            currentHp = totalHp;
-            atk = Level + 6;
-            def = Level + 5;
-            speed = Level + 6;
-            expPts = Level * 20;
-            expLvUp = expPts + 20;
+            maxHP = LVL + 15;
+            currentHp = maxHP;
+            ATK = LVL + 6;
+            DEF = LVL + 5;
+            SPEED = LVL + 6;
+            EXPnext = LVL * 20;
         }
 
-        //public void levelUp()
-        //{
-        //    Level++;
-        //}
+        void gainEXP()
+        {
+            EXP += 50;
+            if (EXP == EXPnext) LVL++;
+            setRandomStats();
+        }
+
+        void wildCombatAI()
+        {
+
+        }
 
         public void displayInfo()
         {
-            Write($"> {Name} type:");
-            typeColor(Type1);
+            Write($"> {NAME} type:");
+            //Game.typeColor(TypeA);
             Write($"/");
-            typeColor(Type2);
-            WriteLine($" level:{Level} HP:{totalHp}" +
-            $"\n  atk:{atk} def:{def}" +
-            $"\n  EXP < ########## >{expPts}/{expLvUp}");
+            //Game.typeColor(TypeB);
+            WriteLine($" level:{LVL} HP:{maxHP}" +
+            $"\n  atk:{ATK} def:{DEF}" +
+            $"\n  EXP < ########## > {EXP}/{EXPnext}");
         }
 
-        //ConsoleColor[] typeColors =
-        //    {
-        //    ConsoleColor.Green, ConsoleColor.Blue, ConsoleColor.Blue, ConsoleColor.Red, ConsoleColor.DarkGray,ConsoleColor.Yellow, ConsoleColor.DarkMagenta,ConsoleColor.Gray
-        //    };
 
-        public void typeColor(string type)
+        public void Fight(Pokemon enemy)
         {
-            ConsoleColor typeColor = ConsoleColor.Gray;
-            switch (type)
-            {
-                case "GRASS":
-                    typeColor = ConsoleColor.Green;
-                    break;
-                case "WATER":
-                    typeColor = ConsoleColor.Blue;
-                    break;
-                case "FIRE":
-                    typeColor = ConsoleColor.Red;
-                    break;
-                case "NORMAL":
-                    typeColor = ConsoleColor.DarkGray;
-                    break;
-                case "ELECTRIC":
-                    typeColor = ConsoleColor.Yellow;
-                    break;
-                case "POISON":
-                    typeColor = ConsoleColor.DarkMagenta;
-                    break;
-                case "FLYING":
-                    typeColor = ConsoleColor.Gray;
-                    break;
-                case "ICE":
-                    typeColor = ConsoleColor.Cyan;
-                    break;
-                case "BUG":
-                    typeColor = ConsoleColor.DarkYellow;
-                    break;
-                case "ROCK":
-                    typeColor = ConsoleColor.DarkGray;
-                    break;
-                case "GROUND":
-                    typeColor = ConsoleColor.DarkGreen;
-                    break;
-                case "FIGHTING":
-                    typeColor = ConsoleColor.DarkRed;
-                    break;
-                case "PSYCHIC":
-                    typeColor = ConsoleColor.Magenta;
-                    break;
-                case "GHOST":
-                    typeColor = ConsoleColor.DarkMagenta;
-                    break;
-                default:
-                    break;
-            }
-            BackgroundColor = typeColor;
-            Write(type);
-            ResetColor();
+            useMove();
         }
 
-        //public void useMove()
-        //{
-        //    WriteLine("> {0} used scratch!", Name);
-        //}
+        public void useMove()
+        {
+            WriteLine("> Select a move\n");
+            WriteLine($"0 => {moves[0]}    1 => {moves[1]}\n" +
+                      $"\n" +
+                      $"2 => {moves[2]}    3 => {moves[3]}\n");
+            int move = int.Parse(ReadLine());
+            //get index in movelist.txt
+            WriteLine("> {0} used {1}!", NAME, moves[move]);
+            //if index not found(=-1) "I never added a move to that slot"
+            //int moveDMG = 
+            //return moveDMG;
+        }
+
+        void takeDamage(int dealtDMG)
+        {
+            currentHp -= dealtDMG-DEF;
+        }
+
+        int calculateTypeDamage(Pokemon defender)
+        {
+            //a-attacker   d-defender
+            int aType1 = Array.IndexOf(types, TypeA);
+            int aType2 = Array.IndexOf(types, TypeB);
+            int dType1 = Array.IndexOf(types, defender.TypeA);
+            int dType2 = Array.IndexOf(types, defender.TypeB);
+            //Nota: si algun type2 es "" obtiene el valor 0
+            double dmgType1, dmgType2, totaldmgMod;
+            //calculate attacker damage
+            dmgType1 = damageChart[aType1, dType1] + damageChart[aType1, dType2];
+            dmgType2 = damageChart[aType2, dType1] + damageChart[aType2, dType2];
+            totaldmgMod = dmgType1 + dmgType2;
+            int dealtTypeDMG = Convert.ToInt32(totaldmgMod);
+            return dealtTypeDMG;
+        }
+        
+        //todo esto tiene que ser almacenado en un .txt//
+        
+        string[,] pokedex =
+        {
+            {"Knurttt","NORMAL",""},
+            {"SPLAART!!!","ELECTRIC",""},
+            {"Fuck King","GRASS","POISON"},
+            {"Buntd,","BUG","POISON"},
+            {"MAGIKRAP","WATER",""},
+            {"TurntSNACO","ROCK",""},
+        };
+        double[,] damageChart =
+        {
+             //NORML|FIRE |WATER|GRASS|ELTRC| ICE |FIGHT|POISN|GROND|FLYNG|PSYCH| BUG |ROCK |GHOST|DRAGN|DARK |STEEL|
+            {0,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  },
+            {0,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  , 0.5 },//NRML
+            {0,  1  , 0.5 , 0.5 ,  2  ,  1  ,  2  ,  1  ,  1  ,  1  ,  1  ,  1  ,  2  , 0.5 ,  1  , 0.5 ,  1  ,  2  },//FIRE
+            {0,  1  ,  2  , 0.5 , 0.5 ,  1  ,  1  ,  1  ,  1  ,  2  ,  1  ,  1  ,  1  ,  2  ,  1  , 0.5 ,  1  ,  1  },//WATR
+            {0,  1  , 0.5 ,  2  , 0.5 ,  1  ,  1  ,  1  , 0.5 ,  2  , 0.5 ,  1  , 0.5 ,  2  ,  1  , 0.5 ,  1  , 0.5 },//GRAS
+            {0,  1  ,  1  ,  2  , 0.5 , 0.5 ,  1  ,  1  ,  1  ,  0  ,  2  ,  1  ,  1  ,  1  ,  1  , 0.5 ,  1  ,  1  },//ELTR
+            {0,  1  , 0.5 , 0.5 ,  2  ,  1  , 0.5 ,  1  ,  1  ,  2  ,  2  ,  1  ,  1  ,  1  ,  1  ,  2  ,  1  , 0.5 },//ICE
+            {0,  2  ,  1  ,  1  ,  1  ,  1  ,  2  ,  1  , 0.5 ,  1  , 0.5 , 0.5 , 0.5 ,  2  ,  0  ,  1  ,  2  ,  2  },//FIGT
+            {0,  1  ,  1  ,  1  ,  2  ,  1  ,  1  ,  1  , 0.5 , 0.5 ,  1  ,  1  ,  1  , 0.5 , 0.5 ,  1  ,  1  ,  0  },//POSN
+            {0,  1  ,  2  ,  1  , 0.5 ,  2  ,  1  ,  1  ,  2  ,  1  , 0.5 ,  1  , 0.5 ,  2  ,  1  ,  1  ,  1  ,  2  },//GRND    
+            {0,  1  ,  1  ,  1  ,  2  , 0.5 ,  1  ,  2  ,  1  ,  1  ,  1  ,  1  ,  2  , 0.5 ,  1  ,  1  ,  1  , 0.5 },//FLYN    
+            {0,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  2  ,  2  ,  1  ,  1  , 0.5 ,  1  ,  1  ,  1  ,  1  ,  0  , 0.5 },//PSYC
+            {0,  1  , 0.5 ,  1  ,  2  ,  1  ,  1  , 0.5 , 0.5 ,  1  , 0.5 ,  2  ,  1  ,  1  , 0.5 ,  1  ,  2  , 0.5 },//BUG
+            {0,  1  ,  2  ,  1  ,  1  ,  1  ,  2  , 0.5 ,  1  , 0.5 ,  2  ,  1  ,  2  ,  1  ,  1  ,  1  ,  1  , 0.5 },//ROCK
+            {0,  0  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  2  ,  1  ,  1  ,  2  ,  1  , 0.5 , 0.5 },//GHOS
+            {0,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  2  ,  1  , 0.5 },//DRAG
+            {0,  1  ,  1  ,  1  ,  1  ,  1  ,  1  , 0.5 ,  1  ,  1  ,  1  ,  2  ,  1  ,  1  ,  2  ,  1  , 0.5 , 0.5 },//DARK
+            {0,  1  , 0.5 , 0.5 ,  1  ,  1  ,  2  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  2  ,  1  ,  1  ,  1  , 0.5 },//STEL
+            //row-attacker//column-defender//
+            //0-miss 0.5-half 1-normal 2-doble//
+        };
+        string[] types = 
+            {"", "NORMAL", "FIRE", "WATER", "GRASS", "ELECTRIC", "ICE", "FIGHT", "POISON", "GROUND", "FLYING", "PSYCHIC", "BUG", "ROCK", "GHOST", "DRAGON", "DARK", "STEEL" };
     }
 }

@@ -1,35 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static System.Console;
 
 namespace PokemonGrumps
 {
     class Player
     {
-        List<Pokemon> PKMNteam = new List<Pokemon>();
+        List<Pokemon> PKMNteam = new List<Pokemon>(); //change accesibility and use getActivePKMN()
         public string Name;
-        int money;
+        //int money = 0;
         //int gymBadges = 0;
-        public Player(string name = "I never")
+
+        public Player(string name="I never")
         {
             Name = name;
         }
 
-        public void AddPKMN(Pokemon PKMN)
-        {
-            PKMNteam.Add(PKMN);
-        }
+        public void AddPKMN(Pokemon PKMN) => PKMNteam.Add(PKMN);
+        
+        public Pokemon getActivePKMN() => PKMNteam[0];
 
         public void ActionPrompt(Pokemon rivalPKMN)
         {
             Pokemon activePKMN = PKMNteam[0];
             string sel="";
-            while (rivalPKMN.currentHp > 0 && sel != "r")
+            while (sel != "r")
             {
-                WriteLine($"\n> What will I never do?");
+                WriteLine($"\n> What will I never do?"); //aqui deberia decir el nombre del pkmn pero "i never" me gusta mas xd
                 WriteLine("====================\n" +
                           "= f-FIGHT    b-BAG =\n" +
                           "= p-PKMN     r-RUN =\n" +
@@ -38,9 +35,7 @@ namespace PokemonGrumps
                 switch (sel)
                 {
                     case "f":
-                        Fight(activePKMN, rivalPKMN);
-                        if (rivalPKMN.currentHp <= 0) 
-                            WriteLine("> Foe '{0}' fainted!", rivalPKMN.Name);
+                        activePKMN.Fight(rivalPKMN);
                         break;
                     case "b":
                         //bag
@@ -50,39 +45,17 @@ namespace PokemonGrumps
                         ActionPrompt(rivalPKMN);
                         break;
                     case "r":
-                        WriteLine("> eeeeeeeeee BYE!");
+                        WriteLine("> eeeeeeeeee...... ok BYE!");
                         break;
                     default:
                         break;
                 }
             }
+            WriteLine("I never got $$$ for winning!");
+            //distribuir EXP entre los pkmn q lucharon
             ReadKey(true);
         }
-        //FIGHT----------------------------------------------------------------------FIGHT//
-        public void Fight(Pokemon activePKMN, Pokemon rival)
-        {
-            //iniciar cada vez q termina un turno enemigo
-            WriteLine("> Select a move\n 0 SCRATCH  1 GROWL  2 BACK");
-            int sel = int.Parse(ReadLine());
-            if (sel == 0)
-            {
-                Write("enemy previous hp {0} ", rival.currentHp);
-                WriteLine($"{activePKMN.Name} used scratch!");
-                rival.currentHp -= (activePKMN.atk + 5) - rival.def;
-                WriteLine($"'{rival.Name}' loses {(activePKMN.atk + 5) - rival.def} HP");
-                WriteLine("enemy actual hp {0} ", rival.currentHp);
-                //turno enemigo
-            }
-            else if (sel == 1)
-            {
-                WriteLine($"{activePKMN.Name} used growl!");
-                rival.atk -= 5;
-                WriteLine($"'{rival.Name}' attack power lowers!");
-                //turno enemigo
-            }
-            else ActionPrompt(rival);
-        }
-        //PKMN----------------------------------------------------------------------PKMN//
+        //PKMN ########################################################################## PKMN//
         void displayPKMNteam(Pokemon activePKMN)
         {
             WriteLine("\n============ POKéMONs ============");
@@ -99,5 +72,6 @@ namespace PokemonGrumps
                 activePKMN = PKMNteam[selected];
             }
         }
+
     }
 }
