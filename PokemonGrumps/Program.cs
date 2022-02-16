@@ -8,8 +8,6 @@ namespace PokemonGrumps
         static void Main(string[] args)
         {
             Title = "Pokemon GRUMPS";
-            WindowHeight = 40;
-            WindowWidth = 70;
             WriteLine(@" _____ _____ _____     _____ _____ _____ 
 |  _  |     |  |  |___|     |     |   | |
 |   __|  |  |    -| -_| | | |  |  | | | |
@@ -20,6 +18,8 @@ namespace PokemonGrumps
             WriteLine("Fire/Red - Grumps Edition\n");
             ResetColor();
 
+            Pokemon.Pokedex();
+            Move.Moves();
             Game newGame = new Game();
 
             WriteLine("Press any key to exit...");

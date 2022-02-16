@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.IO;
 using static System.Console;
 
 namespace PokemonGrumps
@@ -15,7 +15,8 @@ namespace PokemonGrumps
 
         public static void debuggingText(string txt)
         {
-            ForegroundColor = ConsoleColor.Red;
+            BackgroundColor = ConsoleColor.White;
+            ForegroundColor = ConsoleColor.Black;
             WriteLine($">>{txt}");
             ResetColor();
         }

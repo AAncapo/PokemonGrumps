@@ -6,9 +6,9 @@ namespace PokemonGrumps
     class Event
     {
         static Player Inever = new Player();
-        static Pokemon playerPKMN;
+        static Pokemon Sch;
         static Player Claarf = new Player("Claarff");
-        static Pokemon rivalPKMN;
+        static Pokemon Squirtle;
 
         public static void Intro()
         {
@@ -57,10 +57,10 @@ namespace PokemonGrumps
 
         static void pickCharmanderAnywaysXD()
         {
-            playerPKMN = new Pokemon("Sch", "FIRE", "", 5);
-            Inever.AddPKMN(playerPKMN);
-            rivalPKMN = new Pokemon("SQUIRTLE", "WATER", "", 5); //claarff pick water
-            Claarf.AddPKMN(rivalPKMN);
+            Sch = new Pokemon(0);
+            Inever.AddPKMN(Sch);
+            Squirtle = new Pokemon(1); //claarff pick water
+            Claarf.AddPKMN(Squirtle);
             WriteLine("\n> I never received the CHARMANDER from PROF. Oak!\n");
         }
 

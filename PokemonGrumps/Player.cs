@@ -20,7 +20,7 @@ namespace PokemonGrumps
         
         public Pokemon getActivePKMN() => PKMNteam[0];
 
-        public void ActionPrompt(Pokemon rivalPKMN)
+        public void ActionPrompt(Pokemon enemy)
         {
             Pokemon activePKMN = PKMNteam[0];
             string sel="";
@@ -35,14 +35,14 @@ namespace PokemonGrumps
                 switch (sel)
                 {
                     case "f":
-                        activePKMN.Fight(rivalPKMN);
+                        activePKMN.Fight(enemy);
                         break;
                     case "b":
                         //bag
                         break;
                     case "p":
                         displayPKMNteam(activePKMN);
-                        ActionPrompt(rivalPKMN);
+                        ActionPrompt(enemy);
                         break;
                     case "r":
                         WriteLine("> eeeeeeeeee...... ok BYE!");
@@ -55,7 +55,7 @@ namespace PokemonGrumps
             //distribuir EXP entre los pkmn q lucharon
             ReadKey(true);
         }
-        //PKMN ########################################################################## PKMN//
+
         void displayPKMNteam(Pokemon activePKMN)
         {
             WriteLine("\n============ POKéMONs ============");
@@ -72,6 +72,5 @@ namespace PokemonGrumps
                 activePKMN = PKMNteam[selected];
             }
         }
-
     }
 }
