@@ -8,7 +8,7 @@ namespace PokemonGrumps
     class Move
     {
         public string Tag;
-        int Type;
+        public int Type;
         int Pow;
         string[] moveType = { "NORMAL", "FIRE", "WATER", "GRASS", "ELECTRIC", "ICE", "FIGHT", "POISON", "GROUND", "FLYING", "PSYCHIC", "BUG", "ROCK", "GHOST", "DRAGON", "DARK", "STEEL" };
         public static string[,] movelist = new string[15, 3];

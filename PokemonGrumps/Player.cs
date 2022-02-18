@@ -8,8 +8,6 @@ namespace PokemonGrumps
     {
         List<Pokemon> PKMNteam = new List<Pokemon>(); //change accesibility and use getActivePKMN()
         public string Name;
-        //int money = 0;
-        //int gymBadges = 0;
 
         public Player(string name="I never")
         {
